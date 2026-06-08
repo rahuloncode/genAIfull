@@ -45,7 +45,7 @@ export const login = async ({ email, password }) => {
 
 export const logout = async () => {
   try {
-    const response = await axios.get("/api/auth/logout");
+    const response = await api.get("/api/auth/logout");
 
     return response.data;
   } catch (error) {
@@ -58,7 +58,7 @@ export const logout = async () => {
 //getProfile
 export const getme = async () => {
   try {
-    const response = await axios.get("/api/auth/getme");
+    const response = await api.get("/api/auth/getme");
 
     return response.data;
   } catch (error) {
