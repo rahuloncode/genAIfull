@@ -17,7 +17,7 @@ import mongoose, { Schema } from "mongoose";
  */
 const technicalSchema = new Schema(
   {
-    question: { type: String, required: true },
+    question: { type: [String], required: true },
     intention: { type: String, required: true },
     answer: { type: String, required: true },
   },
@@ -41,6 +41,10 @@ const skillGapSchema = new Schema(
       enum: ["low", "medium", "high"],
       required: [true, "Severity is required"],
     },
+    answer: {
+      type: String,
+      required: true,
+    },
   },
   { _id: false },
 );
@@ -53,7 +57,7 @@ const preparatioPlanSchema = new Schema(
       required: [true, "Focus is required"],
     },
     tasks: {
-      type: String,
+      type: [String],
       required: [true, "task is required"],
     },
   },
@@ -61,20 +65,40 @@ const preparatioPlanSchema = new Schema(
 );
 
 // main Schema
-const intervireReportSchema = Schema(
+const intervireReportSchema = new Schema(
   {
-    jobDescription: { type: String, required: true },
-    resumeText: {
+    jobDescription: {
       type: String,
+      required: true,
     },
-    selfDeclartion: { type: String },
-    matchScore: { type: Number, min: 0, max: 100 },
-    technicalQuestions: [technicalSchema],
-    behaviouralQuestions: [behaviouralSchema],
-    SkillGaps: [skillGapSchema],
-    preoarationPlan: [preparatioPlanSchema],
+
+    resumeText: String,
+
+    selfDeclaration: String,
+
+    matchScore: {
+      type: Number,
+      min: 0,
+      max: 100,
+    },
+
+    technicalQuestions: [String],
+
+    behavioralQuestions: [String],
+
+    skillGaps: [String],
+
+    preparationPlan: [String],
+
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  { timestamp: true },
+  {
+    timestamps: true,
+  },
 );
 
 const interviewReportModel = mongoose.model(
